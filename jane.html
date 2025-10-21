@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jane Mae Cañedo | Portfolio </title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- Custom CSS and Styling: Dynamic Glassmorphism Theme -->
+    <style>
+        /* Core Theme: Glassmorphism with Smooth Dynamic Effects */
+       :root {
+    /* Adjusted Background Base for deeper contrast */
+    --bg-dark: #1a0a0f; /* deep pinkish black background */
+    --accent-purple: #ff69b4; /* hot pink (main accent) */
+    --accent-blue: #ff1493; /* deep pink (secondary accent) */
+    --text-light: #ffffff; /* pure white text for contrast */
+}
+body { 
+    font-family: 'Inter', sans-serif; 
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%); /* black to dark gray */
+    color: #ffffff; /* white text for contrast */
+    min-height: 100vh;
+    transition: background 0.5s ease;
+    perspective: 1000px;
+}
+/* Modern Glass Card Style (Same Result, Different Approach) */
+.glass-card {
+    background: rgba(255, 255, 255, 0.08); /* Subtle translucent layer */
+    backdrop-filter: blur(18px) saturate(150%); /* More saturation for glass feel */
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.25); /* Slightly clearer border */
+    border-radius: 1.25rem; /* Softer curve */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); /* Balanced depth */
+    transition: transform 0.4s ease, box-shadow 0.4s ease; /* Smooth animation */
+}
+
+.glass-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.45);
+}
+/* Dynamic Hover Effect for Cards (Tilt - Pink Theme) */
+.glass-card:hover {
+    transform: translateY(-5px) rotateX(1deg);
+    box-shadow: 
+        0 15px 45px 0 rgba(255, 105, 180, 0.4), /* soft pink shadow */
+        0 0 30px rgba(255, 20, 147, 0.8); /* bright pink glow */
+}
+/* Top Navigation Styling (BLACKPINK Theme) */
+.header-nav {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(30, 0, 20, 0.85)); /* glossy black-pink tint */
+    backdrop-filter: blur(10px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 105, 180, 0.6); /* hot pink border */
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 2px 15px rgba(255, 20, 147, 0.4); /* glowing pink aura */
+}
+.nav-link {
+    position: relative;
+    color: #ffffff; /* white text for contrast on dark background */
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ff69b4; /* hot pink hover */
+    text-shadow: 0 0 6px #ff69b4, 0 0 12px #ff1493; /* glowing pink effect */
+}
+
+.nav-link.active {
+    color: #ff69b4; /* hot pink active state */
+    font-weight: 600;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ff69b4; /* underline in pink */
+    box-shadow: 0 0 8px #ff69b4, 0 0 15px #ff1493; /* soft glow */
+}
+
+
+        /* Main Content Container */
+        .main-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Section Styling */
+        .activity-section {
+            display: none; 
+            min-height: 70vh;
+            padding: 3rem 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        
+        .activity-section:target, 
+        .activity-section.default-active { 
+            display: block;
+        }
+        /* Dynamic Button Style (Pastel Pink Theme) */
+.dynamic-button {
+    background: linear-gradient(90deg, #ffd1dc 0%, #ffb6c1 100%); /* pastel pink gradient */
+    color: #5a0033; /* deep rose text for contrast */
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 15px rgba(255, 182, 193, 0.5); /* soft pink glow */
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.dynamic-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 192, 203, 0.7); /* brighter pastel glow */
+}
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Top Navigation Header -->
+    <header class="header-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <div class="text-3xl font-extrabold tracking-widest text-white">
+                <span class="text-4xl font-mono" style="color: var(--accent-purple);">My<span style="color: var(--accent-blue);"></span></span> Portfolio
+            </div>
+            <nav id="activity-nav" class="hidden md:flex space-x-8">
+                <!-- Main Pages -->
+                <a href="#activity-home" class="nav-link text-sm uppercase tracking-wider" data-target="activity-home">Home</a>
+                <a href="#activity-1" class="nav-link text-sm uppercase tracking-wider" data-target="activity-1">About</a>
+                <!-- Projects Link -->
+                <a href="#activity-projects" class="nav-link text-sm uppercase tracking-wider" data-target="activity-lab">Lab Activities</a>
+                <a href="#activity-contact" class="nav-link text-sm uppercase tracking-wider" data-target="activity-contact">Contact</a>
+            </nav>
+            <!-- Mobile Menu Toggle (Simplified for this file) -->
+            <button class="md:hidden text-white text-xl p-2 rounded-md hover:bg-gray-700">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="main-container">  
+        <!-- --------------------------------------------------------------------- -->
+        <!-- --- SECTION 1: HOME (Hero Banner)                                   --- -->
+        <!-- --------------------------------------------------------------------- -->
+        <section id="activity-home" class="activity-section default-active">
+            <div class="hero-grid grid md:grid-cols-2 gap-10 items-center min-h-[70vh]">
+                
+                <!-- Left Side: Text and Buttons -->
+                <div class="p-4 md:p-0">
+                    
+                 
+                    <!-- Text color is now pure white -->
+                    <p class="text-2xl font-light text-gray-300 mb-2">Hi I am</p>
+                    <h1 class="text-6xl md:text-8xl font-black mb-4 leading-tight text-white" style="text-shadow: 0 0 10px rgba(147, 51, 234, 0.7);">
+                               JANE MAE
+                    </h1>
+                    <h2 class="text-3xl md:text-4xl font-semibold mb-8" style="color: var(--accent-blue);">
+                        Web <span style="color: var(--accent-purple);">Developer</span>
+                    </h2>
+
+                    <!-- Social Media Links (Glassy, with accent color) -->
+                    <div class="flex space-x-4 mb-10">
+                        <!-- Text inside glass card is now white -->
+                        <a href="#" class="w-12 h-12 flex items-center justify-center rounded-full text-xl glass-card text-white hover:border-violet-500" style="border: 1px solid rgba(147, 51, 234, 0.5);" aria-label="Github"><i class="fab fa-github"></i></a>
+                        <a href="#" class="w-12 h-12 flex items-center justify-center rounded-full text-xl glass-card text-white hover:border-violet-500" style="border: 1px solid rgba(147, 51, 234, 0.5);" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="w-12 h-12 flex items-center justify-center rounded-full text-xl glass-card text-white hover:border-violet-500" style="border: 1px solid rgba(147, 51, 234, 0.5);" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-12 h-12 flex items-center justify-center rounded-full text-xl glass-card text-white hover:border-violet-500" style="border: 1px solid rgba(147, 51, 234, 0.5);" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                    
+                    <!-- Primary Call to Action Button -->
+                    <a href="#activity-1" class="inline-block px-10 py-4 font-bold rounded-full text-lg dynamic-button transition duration-300">
+                        WELCOME
+                    </a>
+                </div>
+
+                <!-- Right Side: Abstract Visual Element -->
+                <div class="flex justify-center md:justify-end">
+                 <div class="w-full max-w-sm md:max-w-md aspect-circle rounded-full flex items-center justify-center overflow-hidden glass-card p-10 transition-all duration-500 hover:scale-[1.03] shadow-2xl" style="background: rgba(59, 130, 246, 0.1); border: 2px solid var(--accent-purple);">
+                  <img src="images/profile.jpg" alt="Jane Mae Cañedo " 
+                    
+                    
+                    <span class="text-8xl font-extrabold" style="color: var(--accent-pink); text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+            
+        <!-- --------------------------------------------------------------------- -->
+        <!-- --- SECTION 2: ACTIVITY 1              --- -->
+        <!-- --------------------------------------------------------------------- -->
+        <section id="activity-1" class="activity-section">
+            <h3 class="text-3xl font-bold mb-6" style="color: var(--accent-purple); border-bottom: 2px solid var(--accent-blue);">Activity 1: About Me | Personal Introduction</h3>
+            <div class="glass-card flex flex-col md:flex-row gap-8 p-8">
+                <img src="images/profile.jpg" alt="Jane Mae Cañedo " class="w-32 h-32 md:w-48 md:h-48 rounded-lg border-4 border-white/50 flex-shrink-0 object-cover shadow-xl transition-all duration-300 hover:scale-[1.02]">
+                <div>
+                    <h1 class="text-3xl font-extrabold text-white mb-1 mt-4 md:mt-0">Jane Mae Cañedo </h1>
+                    <p class="text-lg mb-4 font-semibold" style="color: var(--accent-blue);">DIT 3rd Year | Student</p>
+                    <p class="text-justify mb-4 text-white leading-relaxed">I’m a student with a strong passion for technology and design. I love exploring new programming languages and developing creative solutions. After I graduate, I aspire to become a software developer at an innovative tech company, specializing in web development. I’m a fast learner who is committed to continuously improving my skills.</p>
+                <h2 class="text-xl font-bold mt-6 mb-3 border-b border-gray-700 pb-2" style="color: var(--accent-purple);">Skills </h2>
+          
+             <!-- Contrast adjustment on the skills tags -->
+                    <div class="flex flex-wrap gap-3">
+                        <span class="glass-tag px-3 py-1 rounded-full font-medium transition duration-300 hover:bg-white/20" style="background: rgba(59, 130, 246, 0.3); color: #fff; border: 1px solid rgba(59, 130, 246, 0.6);"><i class="fab fa-html5 mr-1"></i> HTML</span>
+                        <span class="glass-tag px-3 py-1 rounded-full font-medium transition duration-300 hover:bg-white/20" style="background: rgba(147, 51, 234, 0.3); color: #fff; border: 1px solid rgba(147, 51, 234, 0.6);"><i class="fab fa-css3-alt mr-1"></i> CSS</span>
+                        <span class="glass-tag px-3 py-1 rounded-full font-medium transition duration-300 hover:bg-white/20" style="background: rgba(147, 51, 234, 0.3); color: #fff; border: 1px solid rgba(147, 51, 234, 0.6);"><i class="fas fa-database mr-1"></i> SQL</span>
+               </div>
+                     <p class="quote center" style="margin-top:14px;font-style:italic;color:#666">"Never be afraid to express your authentic self.
+"</p>  
+            <h2 class="text-xl font-bold mt-6 mb-3 border-b border-gray-700 pb-2" style="color: var(--accent-purple);">Contact Link</h2>
+        <p class="center"><a href="https://www.facebook.com/jane.calvo1105" target="_blank" rel="noopener">Facebook</a> | <a href="mailto:aiviejoy30@gmail.com">Email</a></p>
+      </div>
+    </div>
+  </div>
+        <!-- --------------------------------------------------------------------- -->
+        <!-- --- SECTION 3: PROJECTS (Activities)                                --- -->
+   <section id="activity-projects" class="activity-section">
+            <h3 class="text-3xl font-bold mb-6" style="color: var(--accent-purple); border-bottom: 2px solid var(--accent-blue);">Lab Activities</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+                 <!-- Activity Cards use the improved glass-card style -->
+                 <a href="#activity-1" class="block p-5 glass-card transition duration-300 hover:border-violet-500">
+                    <i class="fas fa-user-circle text-3xl mb-3" style="color: var(--accent-purple);"></i>
+                    <p class="text-lg font-semibold text-white">Activity 1</p>
+                    <p class="text-sm text-gray-400">Personal Profile</p>
+                 </a>
+                 <!-- Activity 2 -->
+                 <a href="#activity-2" class="block p-5 glass-card transition duration-300 hover:border-violet-500">
+                    <i class="fas fa-desktop text-3xl mb-3" style="color: var(--accent-blue);"></i>
+                    <p class="text-lg font-semibold text-white">Activity 2</p>
+                    <p class="text-sm text-gray-400">UI Design</p>
+                 </a>
+                 <!-- Activity 3 -->
+                 <a href="#activity-3" class="block p-5 glass-card transition duration-300 hover:border-violet-500">
+                    <i class="fas fa-terminal text-3xl mb-3" style="color: var(--accent-purple);"></i>
+                    <p class="text-lg font-semibold text-white">Activity 3</p>
+                    <p class="text-sm text-gray-400">Toggle </p>
+                 </a>
+                 <!-- Activity 4 -->
+                 <a href="#activity-4" class="block p-5 glass-card transition duration-300 hover:border-violet-500">
+                    <i class="fas fa-eye text-3xl mb-3" style="color: var(--accent-blue);"></i>
+                    <p class="text-lg font-semibold text-white">Activity 4</p>
+                    <p class="text-sm text-gray-400">Hover</p>
+                 </a>
+                 <!-- Activity 5 -->
+                 <a href="#activity-5" class="block p-5 glass-card transition duration-300 hover:border-violet-500">
+                    <i class="fas fa-adjust text-3xl mb-3" style="color: var(--accent-purple);"></i>
+                    <p class="text-lg font-semibold text-white">Activity 5</p>
+                    <p class="text-sm text-gray-400">Dark Mode</p>
+                 </a>
+            </div>
+        </section>
+        <!-- --------------------------------------------------------------------- -->
+        <!-- --- SECTION 4: CONTACT                                              --- -->
+        <!-- --------------------------------------------------------------------- -->
+    <section id="activity-contact" class="activity-section">
+  <div class="max-w-5xl mx-auto text-center">
+    <h3 class="text-4xl font-bold mb-10 text-white">Contact Me</h3>
+
+    <div class="flex flex-col md:flex-row justify-between gap-10 glass-card p-10">
+
+      <!-- Left Side: Contact Info -->
+      <div class="flex-1 text-left space-y-6">
+        <div class="flex items-center space-x-4">
+          <i class="fas fa-paper-plane text-pink-500 text-2xl"></i>
+          <span class="text-gray-300">janemae11@example.com</span>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <i class="fas fa-phone text-pink-500 text-2xl"></i>
+          <span class="text-gray-300">0991 311 8958</span>
+        </div>
+
+        <!-- Social Icons -->
+        <div class="flex space-x-4 mt-4">
+          <a href="#" class="text-gray-400 hover:text-pink-500 text-xl"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-gray-400 hover:text-pink-500 text-xl"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-gray-400 hover:text-pink-500 text-xl"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-gray-400 hover:text-pink-500 text-xl"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+
+        <!-- Download CV Button -->
+        <a href="files/JaneMae_CV.pdf" download
+           class="inline-block mt-6 bg-pink-600 text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:bg-pink-700 transition">
+          <i class="fas fa-download mr-2"></i> Download CV
+        </a>
+      </div>
+
+      <!-- Right Side: Contact Form -->
+      <form class="flex-1 space-y-4">
+        <input type="text" placeholder="Your Name"
+               class="w-full p-3 bg-gray-900 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:border-pink-500 focus:ring-1 focus:ring-pink-500">
+        <input type="email" placeholder="Your Email"
+               class="w-full p-3 bg-gray-900 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:border-pink-500 focus:ring-1 focus:ring-pink-500">
+        <textarea rows="5" placeholder="Your Message"
+                  class="w-full p-3 bg-gray-900 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:border-pink-500 focus:ring-1 focus:ring-pink-500"></textarea>
+
+        <button type="submit"
+                class="w-full bg-pink-600 text-white font-bold py-3 rounded-lg hover:bg-pink-700 transition">
+          Submit
+        </button>
+      </form>
+    </div>
+
+    <p class="text-gray-500 text-sm mt-10">© 2025 No Copyright. Made with 💖 by Jane Mae Cañedo</p>
+  </div>
+</section>
+
+
+        <!-- --- (Activity 2)                             --- -->
+        <!-- --------------------------------------------------------------------- -->
+<section id="activity-2" class="activity-section">
+  <h3 class="text-3xl font-bold mb-6" style="color:#f472b6; border-bottom:2px solid #f9a8d4;">
+    Activity 2: HTML/CSS Website </h3>
+
+  <div class="glass-card p-8 rounded-2xl shadow-xl" style="background:rgba(249,168,212,0.1); border:1px solid rgba(244,114,182,0.4);">
+    <div class="flex flex-col md:flex-row gap-8">
+      
+      <!-- Sidebar / Login Section -->
+      <aside class="w-full md:max-w-xs p-5 rounded-xl shadow-lg" style="background:rgba(244,114,182,0.15); border:1px solid rgba(244,114,182,0.6);">
+        <h4 class="text-xl font-bold mb-4 text-white border-b border-pink-300 pb-2">Sidebar</h4>
+          <p>This is a simple HTML structure</p>
+        <form class="flex flex-col gap-3">
+      </form>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-6 rounded-xl shadow-lg" style="background:rgba(253,164,175,0.1); border:1px solid rgba(253,164,175,0.6);">
+        <h4 class="text-2xl font-bold mb-4 text-white border-b border-pink-300 pb-2">Team Member Table</h4>
+
+        <table class="w-full text-sm md:text-base border-collapse mb-8">
+          <caption class="font-semibold mb-3 text-left text-lg text-pink-300">PROJECT TEAM</caption>
+          <thead>
+            <tr>
+              <th class="p-3 text-white" style="background:#f472b6;">Name</th>
+              <th class="p-3 text-white" style="background:#f472b6;">Skills</th>
+              <th class="p-3 text-white" style="background:#f472b6;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hover:bg-white/10" style="background:rgba(0,0,0,0.3);">
+              <td class="p-3 text-white border border-pink-300">Jane</td>
+              <td class="p-3 text-white border border-pink-300">HTML, CSS</td>
+              <td class="p-3 text-pink-300 font-semibold border border-pink-300">Active</td>
+            </tr>
+            <tr class="hover:bg-white/10" style="background:rgba(0,0,0,0.2);">
+              <td class="p-3 text-white border border-pink-300">Aivie</td>
+              <td class="p-3 text-white border border-pink-300">UI Design</td>
+              <td class="p-3 text-yellow-300 font-semibold border border-pink-300">Pending</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="flex flex-col sm:flex-row gap-6 items-center">
+          <video controls muted class="w-full max-w-sm rounded-xl border-4 border-pink-400 shadow-xl transition-all hover:scale-105">
+            <source src="images/vurikat.mp4" type="video/mp4">
+          </video>
+          <p class="text-white italic border-l-4 border-pink-400 pl-4">
+          </p>
+            <!-- Sidebar / Login Section -->
+      <aside class="w-full md:max-w-xs p-5 rounded-xl shadow-lg" style="background:rgba(244,114,182,0.15); border:1px solid rgba(244,114,182,0.6);">
+        <h4 class="text-xl font-bold mb-4 text-white border-b border-pink-300 pb-2">Login</h4>
+        <form class="flex flex-col gap-3">
+          <input type="text" placeholder="Username" required class="p-2 rounded-md bg-white/10 text-white border border-pink-300 focus:ring-2 focus:ring-pink-400">
+          <input type="password" placeholder="Password" required class="p-2 rounded-md bg-white/10 text-white border border-pink-300 focus:ring-2 focus:ring-pink-400">
+          <button type="submit" class="w-full py-2 rounded-md font-semibold text-white" style="background:linear-gradient(90deg,#f9a8d4,#f472b6); box-shadow:0 4px 15px rgba(244,114,182,0.4); transition:0.3s;">Login</button>
+        </form>
+      </aside>
+        </div>
+      </main>
+
+    </div>o.
+  </div>
+</section>
+
+        <!-- --------------------------------------------------------------------- -->
+        <!-- --- (Activity 3)                         --- -->
+        <!-- --------------------------------------------------------------------- -->
+      <section id="activity-3" class="activity-section">
+            <h3 class="text-3xl font-bold mb-10" style="color: var(--accent-purple); border-bottom: 2px solid var(--accent-blue);">Activity 3: Interactive Profile Card </h3>
+            
+            <div class="flex justify-center">
+                <div class="glass-card text-center p-8 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl">
+                    <img src="images/profile.jpg" alt="Jane Mae Cañedo"class="w-24 h-24 mx-auto mb-4 rounded-full border-4 border-violet-500 shadow-lg">
+                    <h4 class="text-2xl font-bold text-white mb-2"></h4>
+                    <p class="text-gray-300 text-sm mb-6"></p>
+                    
+                    <button id="a3-btn-aboutme" class="px-8 py-3 font-bold rounded-full dynamic-button transition duration-200">ACCESS BIODATA</button>
+                    
+                    <div id="a3-info" class="a3-info mt-6 text-white text-base overflow-hidden opacity-0">
+                        <!-- Glass effect for revealed content (Adjusted background) -->
+                        <p class="p-4 rounded-md border" style="background: rgba(147, 51, 234, 0.3); border-color: rgba(147, 51, 234, 0.6);"> I’m a programmer passionate about web development, focused on using JavaScript to build engaging and interactive user interfaces.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JavaScript for Activity 3 Toggle Logic -->
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const activeSection = document.getElementById('activity-3');
+                    if (!activeSection) return;
+
+                    const btnAboutme = activeSection.querySelector("#a3-btn-aboutme");
+                    const divAboutme = activeSection.querySelector("#a3-info");
+
+                    if (btnAboutme && divAboutme) {
+                        btnAboutme.addEventListener("click", function () {
+                            const isShown = divAboutme.classList.toggle("a3-show");
+                            btnAboutme.textContent = isShown ? "CLOSE DATA" : "ACCESS BIODATA";
+                        });
+                    }
+                });
+            </script>
+            <style>
+                #activity-3 .a3-info {
+                    max-height: 0;
+                    opacity: 0;
+                    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+                    padding: 0 1rem;
+                }
+                #activity-3 .a3-info.a3-show {
+                    max-height: 200px;
+                    opacity: 1;
+                    padding: 1rem;
+                }
+            </style>
+        </section>
+        
+        <!-- --------------------------------------------------------------------- -->
+        <!-- --- (Activity 4)                     --- -->
+        <!-- --------------------------------------------------------------------- -->
+        <section id="activity-4" class="activity-section">
+            <h3 class="text-3xl font-bold mb-10" style="color: var(--accent-purple); border-bottom: 2px solid var(--accent-blue);">Activity 4: Hover Image Reveal </h3>
+            
+            <div class="flex justify-center">
+                <div class="glass-card group relative overflow-hidden p-8 transition-shadow duration-300 hover:shadow-[0_0_25px_rgba(59,130,246,0.7)]">
+                    <img src="images/profile.jpg" alt="Jane Mae Cañedo " alt="Profile Picture" class="w-24 h-24 mx-auto mb-4 rounded-full border-4 border-blue-500 group-hover:scale-105 transition-transform duration-300 shadow-lg">
+                    <h4 class="text-2xl font-bold text-white mb-2">ACCESS PROFILE</h4>
+                    <p class="text-gray-300 text-sm mb-4"></p>
+                    
+                    <!-- Full-bleed glass overlay for reveal effect -->
+                    <div class="a4-bio-text absolute inset-0 backdrop-blur-md flex items-center justify-center p-6 transition-all duration-500 ease-in-out transform translate-y-full group-hover:translate-y-0" style="background: rgba(9, 9, 24, 0.95);">
+                        <p class="text-white text-center text-base font-light italic border-l-4 border-violet-500 pl-4">Passionate about clean UI and accessible web experiences.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --------------------------------------------------------------------- -->
+        <!-- --- PROJECT: JAVASCRIPT DARK MODE SWITCH (Activity 5)               --- -->
+        <!-- --------------------------------------------------------------------- -->
+   <section id="activity-5" class="activity-section">
+            <h3 class="text-3xl font-bold mb-10" style="color: var(--accent-purple); border-bottom: 2px solid var(--accent-blue);">Activity 5: Dark Mode Profile Card</h3>
+            
+            <!-- Default Dark theme (using the main body colors) -->
+            <div id="a5-wrapper" class="p-8 rounded-lg transition-colors duration-500 flex justify-center items-center text-white" style="background: rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.1);">
+                <div class="a5-card glass-card p-8 transition-colors duration-500 hover:scale-[1.01]">
+                    <img src="images/profile.jpg" alt="Jane Mae Cañedo "  class="w-20 h-20 mx-auto mb-4 rounded-full border-4 border-blue-500 shadow-lg">
+
+                    <h4 class="text-2xl font-bold text-white mb-2 text-center">SYSTEM THEME CONTROL</h4>
+
+                    <p class="text-gray-300 text-sm mb-6 text-center"></p>
+
+                    <div class="a5-toggle-container flex justify-center items-center gap-4 mt-6">
+                        <i class="fas fa-sun text-3xl text-yellow-400 transition-colors duration-500"></i>
+                        <label class="relative inline-block w-16 h-8">
+                          <input type="checkbox" id="a5-darkModeToggle" class="opacity-0 w-0 h-0">
+                          <span class="a5-slider absolute cursor-pointer inset-0 rounded-full transition-colors duration-400 shadow-inner" style="background-color: var(--accent-purple);">
+                              <span class="a5-slider-thumb absolute content-[''] h-6 w-6 left-1 bottom-1 bg-white rounded-full transition-transform duration-400 shadow-md"></span>
+                          </span>
+                        </label>
+                        <i class="fas fa-moon text-3xl text-indigo-400 transition-colors duration-500"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JavaScript for Activity 5 Dark Mode Toggle -->
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const wrapper = document.getElementById('a5-wrapper');
+                    const toggle = document.getElementById('a5-darkModeToggle');
+                    if (!wrapper || !toggle) return;
+
+                    const body = document.body;
+                    const card = wrapper.querySelector('.a5-card');
+                    const slider = wrapper.querySelector('.a5-slider');
+                    const h4 = card.querySelector('h4');
+
+                    // Base Colors
+                    const accentPurple = '#9333ea';
+                    const accentBlue = '#3b82f6';
+
+                    // Light Theme Colors (Adjusted for better general visibility)
+                    const lightBg = '#f0f4f8'; /* Lighter Background */
+                    const lightText = '#1f2937'; /* Dark Text for Contrast */
+                    const lightCardBg = 'rgba(255, 255, 255, 0.😎'; // Near opaque white glass
+                    const lightCardBorder = 'rgba(0, 0, 0, 0.1)';
+
+                    function applyTheme(isDark) {
+                        if (isDark) {
+                            // Dark Mode (Glassmorphism look)
+                            body.style.background = linear-gradient(135deg, #121223 0%, #08081a 100%);
+                            body.style.color = 'var(--text-light)'; // White
+                            card.style.background = 'rgba(0, 0, 0, 0.3)'; // Darker Glass
+                            card.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                            h4.style.color = 'white';
+                            slider.style.backgroundColor = accentPurple;
+                            localStorage.setItem('a5-theme-glass', 'dark');
+                        } else {
+                            // Light Mode (High Contrast Standard)
+                            body.style.background = lightBg;
+                            body.style.color = lightText; // Dark Text
+                            card.style.background = lightCardBg;
+                            card.style.borderColor = lightCardBorder;
+                            h4.style.color = accentPurple;
+                            slider.style.backgroundColor = accentBlue;
+                            localStorage.setItem('a5-theme-glass', 'light');
+                        }
+                    }
+
+                    // Load saved theme
+                    const savedTheme = localStorage.getItem('a5-theme-glass');
+                    const isDarkMode = (savedTheme === 'dark' || savedTheme === null); 
+                    
+                    applyTheme(isDarkMode);
+                    toggle.checked = isDarkMode;
+
+                    toggle.addEventListener('change', () => applyTheme(toggle.checked));
+                });
+            </script>
+            <style>
+/* Specific styles for Activity 5 (Dark/Light mode) */
+                #activity-5 .a5-slider-thumb {
+                    transform: translateX(0);
+                    transition: transform 0.4s ease;
+                }
+                #activity-5 input:checked + .a5-slider .a5-slider-thumb {
+                    transform: translateX(24px);
+                }
+            </style>
+        </section>
+
+    </div>
+
+    <!-- Global JavaScript for Active Link State -->
+    <script>
+        function updateActiveLink() {
+            const hash = window.location.hash || '#activity-home';
+            const navButtons = document.querySelectorAll('#activity-nav .nav-link');
+            const mainTitle = document.getElementById('main-title');
+            
+            navButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('href') === hash) {
+                    btn.classList.add('active');
+                    mainTitle.textContent = btn.textContent.trim();
+                }
+            });
+
+            const projectTitles = {
+                '#activity-home': 'Home',
+                '#activity-1': 'act 1.Personal Profile',
+                '#activity-2': 'act 2. Multi-Component UI Design',
+                '#activity-3': 'act 3. Access Toggle',
+                '#activity-4': 'act 4. Data Hover Reveal',
+                '#activity-5': 'act 5. Theme Mode Switch',
+                '#activity-lab': 'Laboratory Activities',
+                '#activity-contact': 'Contact Me'
+            };
+            
+            mainTitle.textContent = projectTitles[hash] || 'Portfolio Section';
+        }
+
+        window.addEventListener('hashchange', updateActiveLink);
+        document.addEventListener('DOMContentLoaded', () => {
+            updateActiveLink(); 
+            if (!window.location.hash) {
+                const defaultSection = document.getElementById('activity-home');
+                if (defaultSection) {
+                     defaultSection.classList.add('default-active');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
